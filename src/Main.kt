@@ -1,43 +1,66 @@
-const val PI = 3.14
 fun main() {
     // 1.
-    var a = 20
-    if (a > 0) {
-        a++
-        println(a)
+    //    val mounth = readln().toInt()
+    //    println("Введите номер месяца:")
+    when (val mounth = 1) {
+        12, 1, 2 -> {
+            print("Зима: ")
+            when (mounth) {
+                12 -> println("Декабрь")
+                1 -> println("Январь")
+                2 -> println("Февраль")
+            }
+        }
+
+        3, 4, 5 -> {
+            print("Весна: ")
+            when (mounth) {
+                3 -> println("Март")
+                4 -> println("Апрель")
+                5 -> println("Май")
+            }
+        }
+
+        6, 7, 8 -> {
+            print("Лето: ")
+            when (mounth) {
+                6 -> println("Июнь")
+                7 -> println("Июль")
+                8 -> println("Август")
+            }
+        }
+
+        9, 10, 11 -> {
+            print("Осень: ")
+            when (mounth) {
+                9 -> println("Сентябрь")
+                10 -> println("Октябрь")
+                11 -> println("Ноябрь")
+            }
+        }
+
+        else -> println("Ошибка, такого месяца не существует")
     }
     // 2.
-    var i = 0
-    if (4 > 0) i++
-    if (45 > 0) i++
-    if (-2 > 0) i++
-    if (8 > 0) i++
-    println("Кол-во положительных чисел: $i")
+    val num: Double = 34.54675
+    val res = when (num % 1) {
+        in 0.1..0.4 -> num.toInt()
+        in 0.5..0.9 -> num.toInt() + 1
+        else -> num
+    }
+    println(res)
     // 3.
-    val c = 20
-    val d = 34
-    println(if (c > d) c else d)
-    // 4.
-    val num = 7
-    println(
-        if (num == 1) "Понедельник" else if (num == 2) "Вторник"
-        else if (num == 3) "Среда" else if (num == 4) "Четверг"
-        else if (num == 5) "Пятница" else if (num == 6) "Суббота"
-        else "Воскресенье"
-    )
-    // 5.
-    val R = 43
-    println(
-        if (R == 1) "Плохо" else if (R == 2) "Неудовлетворительно"
-        else if (R == 3) "Удовлетворительно" else if (R == 4) "Хорошо"
-        else if (R == 5) "Отлично" else "Ошибка"
-    )
-    // 6.
-    val action = 1
-    val e = 3.2
-    val t = 45.4
-    println(
-        if (action == 1) e+t else if (action == 2) a-t
-        else if (action == 3) e*t else e/t
-    )
+    val time = 18
+    when (time) {
+        in 0..5 -> println("Раннее утро")
+        in 6..11 -> println("Утро")
+        in 12..17 -> println("День")
+        in 18..20 -> println("Вечер")
+        in 21..23 -> println("Поздний вечер")
+    }
+    // 1.4 Даны две переменные a = 8, b = 5. Написать алгоритм, при котором a = 5, b = 8.
+    // ???
+    val a = 5;
+    val b = 8
+
 }
