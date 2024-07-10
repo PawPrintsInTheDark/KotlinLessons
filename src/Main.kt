@@ -1,41 +1,57 @@
-import kotlin.math.abs
 import kotlin.math.pow
-import kotlin.math.sqrt
 
-const val pi = 3.14
 fun main() {
     // 1.
-    var a = 213
-    var b = 190.0
-    if (a < b) while (++a < --b); else while (++b < --a); // можно так
-    println(b)
-    println("Cреднее арифметическое равно ${(a + b) / 2.0}") // но этот способ короче и точнее
+    val num = 12
+    var res = 0.0
+    for (t in 1..num){
+        res += 1.0 / t
+    }
+    println("%.2f".format(res))
     // 2.
-    val S = 50.24
-    val D = sqrt(4 * S / pi)
-    val L = pi * D
-    println("Диаметр окружности: $D")
-    println("Длина окружности: $L")
+    var a = 2
+    val b = 12
+    var res1 = 0
+    while (a <= b) {
+        res1 += a.toDouble().pow(2.0).toInt()
+        a++
+    }
+    println("Cумма квадратов = $res1")
     // 3.
-    val x1 = 1
-    val y1 = 6
-    val x2 = 8
-    val y2 = 1
-    val P = 2 * (abs(x2 - x1) + abs(y2 - y1))
-    val Sp = abs(x2 - x1) * abs(y2 - y1)
-    println("Периметр прямоугольника: $P")
-    println("Площадь прямоугольника: $Sp")
+    val A = 3
+    val B = 8
+    var d = 0
+    for (t in A..B) {
+        repeat(d) { print("${t}, ") }
+        d++
+    }
     // 4.
-    for (i in 0..9) {
-        print("${2.0.pow(i).toInt()} ")
+    println("")
+    val isSimple = 11
+    if (isSimple <= 1) println("Число $isSimple не простое")
+    else if (isSimple == 2) println("Число $isSimple простое")
+    else if (isSimple % 2 == 0) println("Число $isSimple не простое ")
+    else {
+        var y = 3
+        while (y * y <= isSimple) {
+            if (isSimple % y == 0) return println("$isSimple не простое")
+            y += 2
+        }
+        println("Число $isSimple простое")
     }
     // 5.
-    println("")
-    var n = 20
-    while (n >= 0) {
-        if(n % 2 == 0) println(n)
-        n--
+    println("Что это такое: синий, большой, с усами и полностью набит зайцами?")
+    while (true) {
+        val str = readln()
+        if (str.equals("Сдаюсь", true)) {
+            println("Правильный ответ: троллейбус.")
+            return
+        } else if (str.equals("Троллейбус", true)) {
+            println("Правильно!")
+            return
+        } else println("Подумай еще.")
     }
 }
+
 
 
