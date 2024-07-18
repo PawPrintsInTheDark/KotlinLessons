@@ -1,58 +1,42 @@
 import kotlin.random.Random
 
 fun main() {
-    // 1.
-    val arr = Array(3) { Array(3) { Random.nextInt(0, 100) } }
+    println("Кол-во локальных минимумов: "+ localMin(1, 4, 2, 6, 7, 2, 1, 6, 8, 1, 8, 10, 2, 6, 4, 5))
+    println("Изменённый массив: "+increase(1, 4, 2, 6, -71, 2, 1, 6, -4, 1, 8, 10, 2, 6, -5, 5).contentToString())
+    val M = 5
+    val N = 5
+    val K = 3
+    val arr = Array(M) { Array(N) { Random.nextInt(0, 100) } }
     for (i in arr) {
         for (j in i) {
             print("$j\t")
         }
         println()
     }
-    val minArr = Array(3) { 0 }
-    for (i in arr.indices) {
-        minArr[i] = arr[i].min()
-    }
-    println("Минимальный элемент массива: ${minArr.min()}")
-    // 2.
-    val arr2 = Array(3) { Array(5) { Random.nextInt(0, 100) } }
-    //var sum = 0
-    for (i in arr2) {
-        for (j in i) {
-            print("$j\t")
-            //sum += j
-        }
-        println()
-    }
-    // Сначала думал что надо найти среднее арифместическое, но потом понял что найти надо немного другое
-    // println("Cреднее арифметическое массива: ${sum/15}")
-    println("Cредний элемент массива: ${arr2.flatten()[arr2.flatten().size / 2]}")
-    // 3.
-    val s = 5 // изменяя размер матрицы, треугольник из едениц так же будет менять размер
-    val arr3 = Array(s) { i ->
-        Array(s) { j -> if (i + j >= s - 1 && i >= j) 1 else 0 }
-    }
-    for (i in arr3) {
-        for (j in i) {
-            print("$j\t")
-        }
-        println()
-    }
-    // 4.
-    val arr4 = Array(15) { Random.nextInt(0, 100) }
-    var max1 = Int.MIN_VALUE
-    var max2 = Int.MIN_VALUE
-    for (num in arr4) {
-        if (num > max1) {
-            max2 = max1
-            max1 = num
-        } else if (num > max2 && max1 != num){
-            max2 = num
+    strMatrix(arr, K)
+
+}
+
+fun localMin(vararg a: Int): Int {
+    var res = 0
+    for (i in 1..<a.size - 1) {
+        if (a[i] < a[i - 1] && a[i] < a[i + 1]) {
+            res++
         }
     }
-    println(arr4.contentToString())
-    println("1 Максимальное число: $max1")
-    println("2 Максимальное число: $max2")
+    return res
+}
+
+fun increase(vararg a: Int): IntArray {
+    println("Начальный массив:  "+ a.contentToString())
+    for (i in a.indices) {
+        if (a[i] < 0) a[i]++
+    }
+    return a
+}
+
+fun strMatrix(arr : Array<Array<Int>> , str : Int){
+    for (i in arr.indices) if (i == str-1) println("элементы ${str} строки данной матрицы: "+arr[i].contentToString())
 }
 
 
