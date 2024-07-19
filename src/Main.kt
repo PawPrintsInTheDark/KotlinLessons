@@ -22,10 +22,7 @@ fun main() {
 fun getEven(arr: Array<Array<Int>>){
     for (i in arr) {
         for (j in i) {
-            fun check(){
                 if (j % 2 ==0) print("$j ")
-            }
-            check()
         }
     }
     println("\n")
@@ -39,7 +36,10 @@ fun filling() : Array<Array<Int>>{
 fun positiveOnly(arr : Array<Array<Int>>){
     for (i in arr) {
         for (j in i) {
-            if (j >= 0) print("$j ")
+            fun check(){
+                if (j >= 0) print("$j ")
+            }
+            check()
         }
     }
     println("\n")
@@ -47,6 +47,7 @@ fun positiveOnly(arr : Array<Array<Int>>){
 
 // Utils
 fun showArray(arr : Array<Array<Int>>){
+
     for (i in arr) {
         for (j in i) {
             print("$j\t")
