@@ -1,44 +1,24 @@
-import kotlin.random.Random
+import phone.IPhone
+import phone.Nokia
+import phone.Sony
 
 fun main() {
     // 1.
-    val box1 = Box(10, 10, 15)
-    println("Объём коробки равен: " + box1.getVolume())
+    val cat = Cat("Кот", 7)
+    val dog = Dog("Собака", 12)
+    cat.besyukatya()
+    cat.eat()
+    dog.bark()
+    dog.eat()
     // 2.
-    val arr = Array(10) { Random.nextInt(1, 100) }
-    println(arr.contentToString())
-    getMaxMin(arr)
+    val nokia = Nokia("3310")
+    nokia.call("+78800553535")
+    val sony = Sony("Xperia")
+    sony.call("+78800553535")
+    val iphone = IPhone("15") // В задании не понял логику, зачем наследоваться от класса IPhone поэтому не стал этого делать
+    iphone.call("+78800553535")
     // 3.
-    println(arrayOf(3, 67, 1, 55, 65, 89, 23).contentToString())
-    // 4.
-    val a = 34
-    val res = when {
-        a > 0 && isEven(a) -> "положительное четное число"
-        a > 0 && !isEven(a) -> "положительное нечётное число"
-        a < 0 && isEven(a) -> "отрицательное  четное число"
-        a < 0 && !isEven(a) -> "отрицательное  нечётное число"
-        a == 0 -> "нулевое число"
-        else -> "неизвестное число"
-    }
-    println("Число $a - $res")
-    // 5.
-    val car = Car(140,1200)
-    car.move()
-    car.stop()
+    println("Элементы массива которые деляться на 5 на цело:")
+    arrayOf(3, 67, 1, 55, 65, 89, 23).forEach { i -> if (i % 5 == 0) print("$i ") }
 }
 
-
-
-fun isEven(i : Int) : Boolean{
-    return i and 1 == 0
-}
-
-fun getMaxMin(arr : Array<Int>){
-    var min = arr[0]
-    var max = arr[0]
-    for (i in arr){
-        if(i > max) max = i
-        if(i < min) min = i
-    }
-    println("Минимальный элемент набора : $min, Максимальный элемент набора $max")
-}
