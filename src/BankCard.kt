@@ -22,6 +22,7 @@ class BankCard(private val password: String) {
             }
             return -1
         }
+        private set
 
 
     private fun generateNumber(): Long {
