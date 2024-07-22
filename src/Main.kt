@@ -1,58 +1,44 @@
 import kotlin.random.Random
 
 fun main() {
-    val reg = Registration("privet@mail.ru")
-    println(reg.getEmail())
-    reg.setPassword("1234")
-    reg.setPassword("123456")
-    println(reg.getPassword())
-
-    val arr = Array(4) { Array(4) { Random.nextInt(0, 100) } }
-    showArray(arr)
-    println("Чётные числа:")
-    getEven(arr)
-    val arr2 = filling()
-    showArray(arr2)
-    val arr3 = Array(4) { Array(4) { Random.nextInt(-100, 100) } }
-    showArray(arr3)
-    println("Положительные числа:")
-    positiveOnly(arr3)
-}
-
-fun getEven(arr: Array<Array<Int>>){
-    for (i in arr) {
-        for (j in i) {
-                if (j % 2 ==0) print("$j ")
-        }
+    // 1.
+    val box1 = Box(10, 10, 15)
+    println("Объём коробки равен: " + box1.getVolume())
+    // 2.
+    val arr = Array(10) { Random.nextInt(1, 100) }
+    println(arr.contentToString())
+    getMaxMin(arr)
+    // 3.
+    println(arrayOf(3, 67, 1, 55, 65, 89, 23).contentToString())
+    // 4.
+    val a = 34
+    val res = when {
+        a > 0 && isEven(a) -> "положительное четное число"
+        a > 0 && !isEven(a) -> "положительное нечётное число"
+        a < 0 && isEven(a) -> "отрицательное  четное число"
+        a < 0 && !isEven(a) -> "отрицательное  нечётное число"
+        a == 0 -> "нулевое число"
+        else -> "неизвестное число"
     }
-    println("\n")
+    println("Число $a - $res")
+    // 5.
+    val car = Car(140,1200)
+    car.move()
+    car.stop()
 }
 
-fun filling() : Array<Array<Int>>{
-    var i = 1
-    return Array(4){Array(4){ i++ }}
+
+
+fun isEven(i : Int) : Boolean{
+    return i and 1 == 0
 }
 
-fun positiveOnly(arr : Array<Array<Int>>){
-    for (i in arr) {
-        for (j in i) {
-            fun check(){
-                if (j >= 0) print("$j ")
-            }
-            check()
-        }
+fun getMaxMin(arr : Array<Int>){
+    var min = arr[0]
+    var max = arr[0]
+    for (i in arr){
+        if(i > max) max = i
+        if(i < min) min = i
     }
-    println("\n")
-}
-
-// Utils
-fun showArray(arr : Array<Array<Int>>){
-
-    for (i in arr) {
-        for (j in i) {
-            print("$j\t")
-        }
-        println()
-    }
-    println()
+    println("Минимальный элемент набора : $min, Максимальный элемент набора $max")
 }
