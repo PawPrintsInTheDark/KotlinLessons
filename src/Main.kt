@@ -1,45 +1,41 @@
+import kotlin.math.max
+import kotlin.random.Random
+
 fun main() {
-    // 1.
-    val pyaterochka = Pyaterochka(15)
-    pyaterochka.isOpen(9)
-    pyaterochka.deliveryOfGoods()
-    pyaterochka.giveSalary()
-    println("--------------------------------------")
-    val magnit = Magnit(11)
-    magnit.isOpen(23)
-    magnit.deliveryOfGoods()
-    magnit.giveSalary()
+    // 1. В задании не сказано делать реализацию, но я решил всё равно её сделать
+    val policeDepartment = PoliceDepartment("Полиция", "88005553535")
+    policeDepartment.activity()
+    policeDepartment.getDescription()
     // 2.
-    println("=======================================")
-    val student = Student("Cерёжа", "Груздев", 19)
-    student.toLive()
-    student.goWash()
-    student.eat()
-    println(student.toString())
-    println("--------------------------------------")
-    val employee = Employee("Владислав", "Владимирович", 32, "Yandex")
-    employee.toLive()
-    employee.goWash()
-    employee.eat()
-    println(employee.toString())
-    println("=======================================")
-    println("${conversion(1, 10.3)} дм")
-    println("${conversion(2, 10.3)} км")
-    println("${conversion(3, 10.3)} м")
-    println("${conversion(4, 10.3)} мм")
-    println("${conversion(5, 10.3)} см")
+    println("--------------------------------------------------------------------")
+    print("Наибольший общий делитель: ")
+    GCDEuclidean(40 , 130)
+    println("--------------------------------------------------------------------")
+    val arr = Array(12){Random.nextInt(0,51)}
+    println(arr.contentToString())
+    get2Max(arr)
+
 }
 
-fun conversion(unit : Int, meters : Double): Double {
-    return when(unit){
-        1 -> meters * 10
-        2 -> meters / 1000
-        3 -> meters
-        4 -> meters * 1000
-        5 -> meters * 100
-        else -> -1.0
+fun get2Max(array: Array<Int>) {
+    var max = Int.MIN_VALUE
+    var max2 = Int.MIN_VALUE
+    for (i in array){
+        if (i > max) {
+            max2 = max
+            max = i
+        }
+        if (i > max2 && i < max) max2 = i
     }
+    println("второе максимальное число $max2")
 }
+
+fun GCDEuclidean(a: Int, b: Int) {
+    if (a == 0 || b == 0) println(max(a, b))
+    else return GCDEuclidean(b, a % b)
+}
+
+
 
 
 
