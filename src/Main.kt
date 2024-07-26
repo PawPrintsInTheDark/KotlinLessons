@@ -1,41 +1,40 @@
-import kotlin.math.max
-import kotlin.random.Random
-
 fun main() {
-    // 1. В задании не сказано делать реализацию, но я решил всё равно её сделать
-    val policeDepartment = PoliceDepartment("Полиция", "88005553535")
-    policeDepartment.activity()
-    policeDepartment.getDescription()
+    // 1.
+    val human =  Human("Игорь", 18)
+    human.live()
+    human.torso().exists(true)
+    human.torso().Organs().isWorking()
+    human.leg("Правая").move()
+    human.leg("Левая").move()
+    human.arm("Левая").move()
+    human.arm("Правая").move()
+    human.head("чего бы поесть", "котика бы погладить...", "много буковок, устал читать (⌐▨_▨)").think()
     // 2.
-    println("--------------------------------------------------------------------")
-    print("Наибольший общий делитель: ")
-    GCDEuclidean(40 , 130)
-    println("--------------------------------------------------------------------")
-    val arr = Array(12){Random.nextInt(0,51)}
-    println(arr.contentToString())
-    get2Max(arr)
-
-}
-
-fun get2Max(array: Array<Int>) {
-    var max = Int.MIN_VALUE
-    var max2 = Int.MIN_VALUE
-    for (i in array){
-        if (i > max) {
-            max2 = max
-            max = i
+    println("----------------------------------------------------")
+    val arr = arrayOf("Иванов", "Петров", "Сидоров", "Процветов", "Протасов")
+    println("Введите символы для поиска")
+    val search = readln()
+    if (search.isNotEmpty()){
+        val searchRes = arr.filter{it.contains(search, true)}
+        if (searchRes.isNotEmpty()){
+            println("Результат поиска:")
+            println(searchRes.toString())
+        } else {
+            println("Ничего не найдено")
         }
-        if (i > max2 && i < max) max2 = i
+    } else {
+        println("Вы не ввели символы для поиска.")
     }
-    println("второе максимальное число $max2")
+    // 3.
+    println("----------------------------------------------------")
+    val array = arrayOf(4,76,1,7,0,1,7,8,6,3,870,2,0,65,23,5)
+    var count = 0
+    var countRes = 0
+    for (i in array){
+        if (i == 0 ){
+            count++
+        }
+        if (count in 1..1) countRes++
+    }
+    println(--countRes)
 }
-
-fun GCDEuclidean(a: Int, b: Int) {
-    if (a == 0 || b == 0) println(max(a, b))
-    else return GCDEuclidean(b, a % b)
-}
-
-
-
-
-
