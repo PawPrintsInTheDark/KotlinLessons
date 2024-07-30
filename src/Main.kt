@@ -1,37 +1,41 @@
 fun main() {
     // 1.
-    val bird = Bird("Дятел")
-    bird.makeSound()
-    printLine()
-    val chiken = Chiken()
-    println(chiken.canFly)
-    chiken.makeSound()
-    printLine()
-    val cuckoo = Cuckoo()
-    println(cuckoo.canFly)
-    println("Кукушка сколько дней мне до выходных")
-    cuckoo.makeSound()
-    printLine()
+    while (true) {
+        println("Введите месяц года")
+        val m = readln().toIntOrNull()
+        if (m != null && m in 1..12) {
+            println("Время года: ${getSeason(m)?.desciption} ")
+            println()
+        } else println("Такого месяца не существует.")
+        println("Желаете продолжить или закончить программу?")
+        println("1. Продолжить\n2. Закончить программу")
+        if (readln().toIntOrNull() == 2) break
+    }
     // 2.
-    val arr = arrayOf("привет", "World", "Kotlin", "коты", "шторы", "подушка", "массив", "слов", "камин","цветочки")
-    println(arr.contentToString())
-    findLongestWord(arr)
-    printLine()
-    // 3.
-    val str = "ПриВет, кАк деЛа"
-    val l = str.filter { it.isUpperCase() }
-    println("Символы находящиеся в верхнем регистре: $l")
-    println("Их кол-во ${l.length}")
+    val str = "Шумоизоляция"
+
+    val charCount = mutableMapOf<Char,Int>()
+    for (char in str){
+        charCount[char] = charCount.getOrDefault(char, 0)+1
+    }
+    println("Повторяющиеся символы:")
+    println(charCount)
 }
 
-fun findLongestWord(arr: Array<String>) {
-    var maxStr = ""
-    for (i in arr) if (maxStr.length < i.length) maxStr = i
-    println("самое длинное слово в массиве: $maxStr")
-    println("И количество букв в этом слове: ${maxStr.length}")
+
+enum class Season(val desciption: String) {
+    WINTER("Зима"),
+    SPRING("Весна"),
+    SUMMER("Лето"),
+    FALL("Осень")
 }
 
-fun printLine(){
-    repeat(50){ print("-")}
-    println()
+fun getSeason(month: Int): Season? {
+    return when (month) {
+        12, 1, 2 -> Season.WINTER
+        3, 4, 5 -> Season.SPRING
+        6, 7, 8 -> Season.SUMMER
+        9, 10, 11 -> Season.FALL
+        else -> null
+    }
 }
