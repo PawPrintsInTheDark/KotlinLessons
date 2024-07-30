@@ -1,40 +1,48 @@
 fun main() {
-    // 1.
-    val human =  Human("Игорь", 18)
-    human.live()
-    human.torso().exists(true)
-    human.torso().Organs().isWorking()
-    human.leg("Правая").move()
-    human.leg("Левая").move()
-    human.arm("Левая").move()
-    human.arm("Правая").move()
-    human.head("чего бы поесть", "котика бы погладить...", "много буковок, устал читать (⌐▨_▨)").think()
-    // 2.
-    println("----------------------------------------------------")
-    val arr = arrayOf("Иванов", "Петров", "Сидоров", "Процветов", "Протасов")
-    println("Введите символы для поиска")
-    val search = readln()
-    if (search.isNotEmpty()){
-        val searchRes = arr.filter{it.contains(search, true)}
-        if (searchRes.isNotEmpty()){
-            println("Результат поиска:")
-            println(searchRes.toString())
-        } else {
-            println("Ничего не найдено")
-        }
-    } else {
-        println("Вы не ввели символы для поиска.")
+
+    val arhive = hashSetOf(Ticket("Головоломка", 12, "12:00"))
+
+    println("⭐ Кинотеатр Барбоса ⭐")
+    println("Введите фильм")
+    val name = readln()
+    println("Введите место")
+    val seat = readln().toInt()
+    println("Введите время")
+    val time = readln()
+
+    arhive.add(Ticket(name, seat, time))
+
+    arhive.add(Ticket("Интерстеллар", 23, "15:00"))
+    arhive.add(Ticket("Девять", 56, "9:00"))
+    arhive.add(Ticket("Ранго", 65, "22:00"))
+    arhive.add(Ticket("Ходячий замок", 41, "18:00"))
+
+    var filmWidth = "Фильм".length
+    var seatWidth = "Место".length
+    var timeWidth = "Время начала сеанса".length
+
+    for (ticket in arhive) {
+        filmWidth = maxOf(filmWidth, ticket.name.length)
+        seatWidth = maxOf(seatWidth, ticket.seat.toString().length)
+        timeWidth = maxOf(timeWidth, ticket.timeStart.length)
     }
-    // 3.
-    println("----------------------------------------------------")
-    val array = arrayOf(4,76,1,7,0,1,7,8,6,3,870,2,0,65,23,5)
-    var count = 0
-    var countRes = 0
-    for (i in array){
-        if (i == 0 ){
-            count++
-        }
-        if (count in 1..1) countRes++
+
+    println("Список проданных билетов:")
+    println("╔${"═".repeat(filmWidth + 2)}╦${"═".repeat(seatWidth + 2)}╦${"═".repeat(timeWidth + 2)}╗")
+    println(
+        "║ ${"Фильм".padStart((filmWidth + 1) / 2 + 1).padEnd(filmWidth)} ║ " +
+                "${"Место".padStart((seatWidth + 1) / 2 + 1).padEnd(seatWidth)} ║ " +
+                "${"Время начала сеанса".padStart((timeWidth + 1) / 2 + 1).padEnd(timeWidth)} ║"
+    )
+
+    println("╠${"═".repeat(filmWidth + 2)}╬${"═".repeat(seatWidth + 2)}╬${"═".repeat(timeWidth + 2)}╣")
+
+    for (ticket in arhive) {
+        println(
+            "║ ${ticket.name.padEnd(filmWidth)} ║ ${
+                ticket.seat.toString().padStart((seatWidth + 1) / 2 + 1).padEnd(seatWidth)
+            } ║ ${ticket.timeStart.padStart((timeWidth + 1) / 2 + 1).padEnd(timeWidth)} ║"
+        )
     }
-    println(--countRes)
+    println("╚${"═".repeat(filmWidth + 2)}╩${"═".repeat(seatWidth + 2)}╩${"═".repeat(timeWidth + 2)}╝")
 }
