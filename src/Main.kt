@@ -1,41 +1,37 @@
 fun main() {
     // 1.
-    while (true) {
-        println("Введите месяц года")
-        val m = readln().toIntOrNull()
-        if (m != null && m in 1..12) {
-            println("Время года: ${getSeason(m)?.desciption} ")
-            println()
-        } else println("Такого месяца не существует.")
-        println("Желаете продолжить или закончить программу?")
-        println("1. Продолжить\n2. Закончить программу")
-        if (readln().toIntOrNull() == 2) break
-    }
+    val strArr = arrayOf("один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь")
+    val max = strArr.maxBy { s -> s.length }
+    println("Самое длинное слово: $max")
+    println("Кол-во символов в слове: ${max.length}")
     // 2.
-    val str = "Шумоизоляция"
-
-    val charCount = mutableMapOf<Char,Int>()
-    for (char in str){
-        charCount[char] = charCount.getOrDefault(char, 0)+1
+    println("-----------------------------------------------")
+    val matrix = Array(4) { i -> Array(4) { j -> i * 4 + j + 1 } }
+    for (row in matrix) {
+        println(row.joinToString("\t"))
     }
-    println("Повторяющиеся символы:")
-    println(charCount)
+    var sum = 0
+    for (i in matrix.indices) {
+        sum += matrix[i][matrix.size - 1 - i]
+    }
+    println("Сумма элементов побочной диагонали матрицы: $sum")
+    // 3.
+    println("-----------------------------------------------")
+    val hp = object : Printer("HP") {
+        override fun print() {
+            println("Принтер $brand печатает...")
+        }
+    }
+    hp.print()
+    val canon = object : Printer("Canon"){
+        val type = "Лазерный"
+        override fun print() {
+            println("$type принтер $brand печатает...")
+        }
+    }
+    canon.print()
 }
 
-
-enum class Season(val desciption: String) {
-    WINTER("Зима"),
-    SPRING("Весна"),
-    SUMMER("Лето"),
-    FALL("Осень")
-}
-
-fun getSeason(month: Int): Season? {
-    return when (month) {
-        12, 1, 2 -> Season.WINTER
-        3, 4, 5 -> Season.SPRING
-        6, 7, 8 -> Season.SUMMER
-        9, 10, 11 -> Season.FALL
-        else -> null
-    }
+abstract class Printer(val brand: String) {
+    abstract fun print()
 }
