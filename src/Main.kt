@@ -1,18 +1,28 @@
 fun main() {
     // 1.
-    println("Введите десятичное число")
-    val a = readln().toIntOrNull() ?: 0
-    println(a.toString(2))
-    println("--------------------------------------------------")
-
+    println(factorial(5))
     // 2.
-    println("Введите двоичное число")
-    val b = readln()
-    if (b.all { it in '0'..'1' }) println(b.toInt(2)) else println("Неверно введено число")
-    println("--------------------------------------------------")
-
+    println("----------------------------")
+    println(tenDegree(3))
     // 3.
-    println("Введите слово")
-    val str = readln()
-    if (str.reversed() == str) println("Слово \'$str\' палиндром") else println("Слово \'$str\' палиндромом не является")
+    println("----------------------------")
+    val array = arrayOf(1, 2, 3, 4, 5, 6, 7)
+    incrementArray(array)
+    println(array.contentToString())
+}
+
+fun factorial(i : Int): Long {
+    if(i == 0) return 1
+    return i * factorial(i-1)
+}
+
+fun tenDegree(i : Int) : Int{
+    if(i == 0) return 1
+    return 10   * tenDegree(i -1)
+}
+
+fun incrementArray(array: Array<Int>, index: Int = 0) {
+    if (index == array.size) return
+    if (index % 2 == 0) array[index]++
+    incrementArray(array, index+1)
 }
