@@ -1,20 +1,29 @@
 fun main() {
     // 1.
-    val f = fun(name: String, year: Int) = "$name поздравляю тебя с наступающим новым $year годом!"
-    println(f("Киану", 2077))
-    //2
-    println("------------------------------------")
-    val isEven = fun(i: Int) = i % 2 == 0
-    val arr = arrayOf(1, 2, 3, 4, 5, 6)
-    checkArrayElement(arr, isEven)
+    repeatPrint(3) { println("Привет Мир!") }
+    // 2.
+line("=")
+    val a = arrayOf(1, 2, 3, 4, 5)
+    val arithmeticMean = { arr: Array<Int> -> println("Cреднее арифметическое: "+ arr.sum().toDouble() / arr.size) }
+    arithmeticMean(a)
     // 3.
-    println("------------------------------------")
-    val concat = fun(str1: String, str2: String) = str1+str2
-    println(concat("Hello ","World!"))
-
+line("=")
+    val arr = arrayOf(1, -2, 3, 5, -67, 78, -9, 0, 24, 2, 83, -3)
+    println(arr.filter { it > 0 })
+    // 4.
+line("=")
+    val arr2 = arrayOf(10, 43, 12, 54, 23, 6, 1, 98, 1, 8)
+    val processArr = { array: Array<Int> -> array.map { if (it % 2 == 0) it / 2 else it * 5 } }
+    println(processArr(arr2))
 }
 
-fun checkArrayElement(arr: Array<Int>, op: (Int) -> Boolean) {
-    println("Чётные: ${arr.filter { op (it)}}")
-    println("Нечётные: ${arr.filter { !op(it) }}")
+fun repeatPrint(count: Int, print: () -> Unit) {
+    repeat(count) {
+        print()
+    }
+}
+
+fun line(s : String){
+    repeat(70){ print(s)}
+    println()
 }
