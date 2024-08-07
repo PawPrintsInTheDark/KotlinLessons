@@ -14,5 +14,5 @@ fun main() {
     println(str3.count { it.isDigit() })
 }
 fun checkNum(num: String): Boolean {
-    return if (num.startsWith("+7") && num.length == 12 && num.all { it.isDigit() }) return true else false
+    return if (num.startsWith("+7") && num.length == 12 && num.substring(2).all{ it.isDigit() }) return true else false
 }
