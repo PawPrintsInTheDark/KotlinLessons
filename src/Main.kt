@@ -1,28 +1,45 @@
 fun main() {
-    // 1.
-    println(factorial(5))
-    // 2.
-    println("----------------------------")
-    println(tenDegree(3))
-    // 3.
-    println("----------------------------")
-    val array = arrayOf(1, 2, 3, 4, 5, 6, 7)
-    incrementArray(array)
-    println(array.contentToString())
+
+    val catalog = Catalog()
+    val users = arrayOfNulls<String>(10)
+    catalog.greeting()
+    catalog.createList(users)
+
+
 }
 
-fun factorial(i : Int): Long {
-    if(i == 0) return 1
-    return i * factorial(i-1)
+class Catalog {
+    fun greeting() {
+        println("Добро пожаловать в каталог пользователей о.о")
+    }
+
+    fun createList(list: Array<String?>) {
+        while (true) {
+            println("Введите имя и фамилию пользователя (или 'exit' для выхода):")
+            val input = readln()
+            if (input.lowercase() == "exit") break
+            try {
+                if (input.isBlank()) throw MyException("Имя не может быть пустым")
+
+                println("Введите позицию (0-9) куда добавим пользователя '$input':")
+                val pos = readLine()?.toIntOrNull()
+
+                if (pos == null || pos !in list.indices) {
+                    throw MyException("Неверная позиция. Пожалуйста, введите число от 0 до 9.")
+                }
+                if (list[pos] == null) {
+                    list[pos] = input
+                    println("Пользователь $input добавлен под индексом $pos")
+                } else {
+                    println("Позиция $pos уже занята. Пожалуйста, выберите другую позицию.")
+                }
+            } catch (e: MyException) {
+                println(e)
+            } finally {
+                println("Текущий каталог пользователей: ${list.joinToString(", ") { it ?: "null" }}")
+            }
+        }
+    }
 }
 
-fun tenDegree(i : Int) : Int{
-    if(i == 0) return 1
-    return 10   * tenDegree(i -1)
-}
-
-fun incrementArray(array: Array<Int>, index: Int = 0) {
-    if (index == array.size) return
-    if (index % 2 == 0) array[index]++
-    incrementArray(array, index+1)
-}
+class MyException(msg: String) : Exception("Ошибка: $msg")
