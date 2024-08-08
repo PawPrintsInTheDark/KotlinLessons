@@ -1,37 +1,45 @@
 fun main() {
     // 1.
-    val strArr = arrayOf("один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь")
-    val max = strArr.maxBy { s -> s.length }
-    println("Самое длинное слово: $max")
-    println("Кол-во символов в слове: ${max.length}")
+    print(1)
+    print("Привет")
+    print(true)
+    print(100L)
+    print(.2f)
     // 2.
-    println("-----------------------------------------------")
-    val matrix = Array(4) { i -> Array(4) { j -> i * 4 + j + 1 } }
-    for (row in matrix) {
-        println(row.joinToString("\t"))
-    }
-    var sum = 0
-    for (i in matrix.indices) {
-        sum += matrix[i][matrix.size - 1 - i]
-    }
-    println("Сумма элементов побочной диагонали матрицы: $sum")
+    val p1 = Person("+78800553535", "Ivan")
+    val p2 = Person(88800553535, "Ivan")
+    println(p1)
+    println(p2)
     // 3.
-    println("-----------------------------------------------")
-    val hp = object : Printer("HP") {
-        override fun print() {
-            println("Принтер $brand печатает...")
-        }
-    }
-    hp.print()
-    val canon = object : Printer("Canon"){
-        val type = "Лазерный"
-        override fun print() {
-            println("$type принтер $brand печатает...")
-        }
-    }
-    canon.print()
+    printWrapper(10, '{')
+    printWrapper("Hello", '[')
+    printWrapper(listOf(1, 2, 3, 4, 5), '[')
+    printWrapper(arrayOf("one", "two", "three"), '*')
+    printWrapper(1.1f, '(')
+
 }
 
-abstract class Printer(val brand: String) {
-    abstract fun print()
+fun <T> printWrapper(d: T, c: Char) {
+    val reversc = when (c) {
+        '{' -> '}'
+        '(' -> ')'
+        '[' -> ']'
+        '<' -> '>'
+        else -> c
+    }
+    when (d) {
+        is List<*> -> println("$c${d.joinToString(", ")}$reversc")
+        is Array<*> -> println("$c${d.joinToString(", ")}$reversc")
+        else -> println("$c$d$reversc")
+    }
+}
+
+fun <T> print(s: T) {
+    println("\'$s\' типа ${s!!::class.java}")
+}
+
+class Person<T>(val number: T, val name: String) {
+    override fun toString(): String {
+        return "name = $name, phone = $number"
+    }
 }
