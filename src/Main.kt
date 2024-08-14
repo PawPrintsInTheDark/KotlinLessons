@@ -1,18 +1,18 @@
 fun main() {
     // 1.
-    val str = "Занятие"
-    str.forEach { print("$it ") }
-    println()
+    val i = 5
+    println(i.pow())
     // 2.
-    val num = "+79992245491"
-    println(checkNum(num))
+    val str = "Hello"
+    println(str.concat(" World"))
     // 3.
-    val str2 = "Привет Мир!"
-    println(str2.reversed())
+    println(str.lastIndex())
+    // println(str.lastIndex) //TODO зачем писать функцию расширения если уже есть готовое решение?
     // 4.
-    val str3 = "kotlin2023course"
-    println(str3.count { it.isDigit() })
+    println((-1).sqrt())
 }
-fun checkNum(num: String): Boolean {
-    return if (num.startsWith("+7") && num.length == 12 && num.substring(2).all{ it.isDigit() }) return true else false
-}
+
+fun Int.pow() = this * this
+fun String.concat(s: String) = this + s
+fun String.lastIndex() = this.lastIndex
+fun Int.sqrt() = kotlin.math.sqrt(this.toDouble()).toInt()
