@@ -1,45 +1,33 @@
 fun main() {
     // 1.
-    print(1)
-    print("Привет")
-    print(true)
-    print(100L)
-    print(.2f)
+    println(10 sum 2)
+    println(10 sub 2)
+    println(10 mul 2)
+    println(10 div 2)
     // 2.
-    val p1 = Person("+78800553535", "Ivan")
-    val p2 = Person(88800553535, "Ivan")
-    println(p1)
-    println(p2)
+    val person = Person("Иван")
+    person say "привет мир!"
     // 3.
-    printWrapper(10, '{')
-    printWrapper("Hello", '[')
-    printWrapper(listOf(1, 2, 3, 4, 5), '[')
-    printWrapper(arrayOf("one", "two", "three"), '*')
-    printWrapper(1.1f, '(')
+    val point1 = Point(23.1, 43.6)
+    val point2 = Point(54.23, 2.1)
+
+    println(point1 isAbove point2)
+    println(point1 isRightOf point2)
 
 }
 
-fun <T> printWrapper(d: T, c: Char) {
-    val reversc = when (c) {
-        '{' -> '}'
-        '(' -> ')'
-        '[' -> ']'
-        '<' -> '>'
-        else -> c
-    }
-    when (d) {
-        is List<*> -> println("$c${d.joinToString(", ")}$reversc")
-        is Array<*> -> println("$c${d.joinToString(", ")}$reversc")
-        else -> println("$c$d$reversc")
+infix fun Int.sum(i: Int) = this + i
+infix fun Int.sub(i: Int) = this - i
+infix fun Int.mul(i: Int) = this * i
+infix fun Int.div(i: Int) = this / i
+
+class Person(val name: String) {
+    infix fun say(msg: String) {
+        println("$name говорит: $msg")
     }
 }
 
-fun <T> print(s: T) {
-    println("\'$s\' типа ${s!!::class.java}")
-}
+infix fun Point.isAbove(p: Point) = this.y > p.y
+infix fun Point.isRightOf(p: Point) = this.x > p.x
 
-class Person<T>(val number: T, val name: String) {
-    override fun toString(): String {
-        return "name = $name, phone = $number"
-    }
-}
+data class Point(val x: Double, val y: Double)
