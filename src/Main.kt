@@ -1,33 +1,54 @@
 fun main() {
     // 1.
-    println(10 sum 2)
-    println(10 sub 2)
-    println(10 mul 2)
-    println(10 div 2)
+    val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    println(list[0])
+    println(list.first())
+    line()
     // 2.
-    val person = Person("Иван")
-    person say "привет мир!"
+    println(list.average())
+    println(sum(list).toDouble() / list.size)
+    line()
     // 3.
-    val point1 = Point(23.1, 43.6)
-    val point2 = Point(54.23, 2.1)
-
-    println(point1 isAbove point2)
-    println(point1 isRightOf point2)
-
-}
-
-infix fun Int.sum(i: Int) = this + i
-infix fun Int.sub(i: Int) = this - i
-infix fun Int.mul(i: Int) = this * i
-infix fun Int.div(i: Int) = this / i
-
-class Person(val name: String) {
-    infix fun say(msg: String) {
-        println("$name говорит: $msg")
+    println(list.sum())
+    println(sum(list))
+    line()
+    // 4.
+    println(list.count())
+    var count = 0
+    for (i in list) {
+        count++
     }
+    println(count)
+    line()
+    // 5.
+    println(list.takeLast(2).sum())
+    var sumOfLast = 0
+    for (i in list.size - 2..<list.size) {
+        sumOfLast += list[i]
+    }
+    println(sumOfLast)
+    line()
+    // 6.
+    println(list.indices.sum())
+    var ind = 0
+    for (i in list.indices){
+        ind += i
+    }
+    println(ind)
+
 }
 
-infix fun Point.isAbove(p: Point) = this.y > p.y
-infix fun Point.isRightOf(p: Point) = this.x > p.x
+fun sum(list: List<Int>): Int {
+    var sum = 0
+    for (i in list) {
+        sum += i
+    }
+    return sum
+}
 
-data class Point(val x: Double, val y: Double)
+fun line() {
+    repeat(40) {
+        print("=")
+    }
+    println()
+}
