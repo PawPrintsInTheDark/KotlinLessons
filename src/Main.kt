@@ -1,49 +1,30 @@
+
 fun main() {
     // 1.
-    val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    println(list[0])
-    println(list.first())
+
+    val set = setOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    println(set.filter { it % 2 == 0 })
+    println(set.filter { it % 2 == 1 })
     line()
     // 2.
-    println(list.average())
-    println(sum(list).toDouble() / list.size)
+    val set2 = set.map { it * 2 }
+        .filter { it % 5 == 0 }
+        .toSet()
+    println(set2)
     line()
     // 3.
-    println(list.sum())
-    println(sum(list))
+    val list = listOf(1,2,3,2,4,5,6,8,2,2)
+    fun <T> removeDuplicates (collection: Collection<T>?): Set<T> {
+        return collection?.toSet() ?: emptySet()
+    }
+    val unique = removeDuplicates(list)
+    println(unique)
     line()
     // 4.
-    println(list.count())
-    var count = 0
-    for (i in list) {
-        count++
-    }
-    println(count)
-    line()
-    // 5.
-    println(list.takeLast(2).sum())
-    var sumOfLast = 0
-    for (i in list.size - 2..<list.size) {
-        sumOfLast += list[i]
-    }
-    println(sumOfLast)
-    line()
-    // 6.
-    println(list.indices.sum())
-    var ind = 0
-    for (i in list.indices){
-        ind += i
-    }
-    println(ind)
-
-}
-
-fun sum(list: List<Int>): Int {
-    var sum = 0
-    for (i in list) {
-        sum += i
-    }
-    return sum
+    val arr = arrayOf(0, 6, 0, 0, 2, 0, 0, 0, 1, 0, 5, 0)
+    val nonZeroArr = arr.filter { it != 0 }.toIntArray()
+    val res = nonZeroArr.plus(IntArray(arr.size-nonZeroArr.size){0})
+    println(res.contentToString())
 }
 
 fun line() {
