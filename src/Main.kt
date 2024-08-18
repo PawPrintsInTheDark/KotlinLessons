@@ -1,30 +1,46 @@
 
 fun main() {
     // 1.
-
-    val set = setOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    println(set.filter { it % 2 == 0 })
-    println(set.filter { it % 2 == 1 })
+    val arr = arrayOf(2, 4, 7, 1, 2, 4)
+    println(count(arr).toString())
     line()
     // 2.
-    val set2 = set.map { it * 2 }
-        .filter { it % 5 == 0 }
-        .toSet()
-    println(set2)
+    val people = mutableMapOf(1 to "Иван", 2 to "Петр",3 to "Лида", 4 to "Петр", 5 to "Анна")
+    deleteElement(people)
+    println(people)
     line()
     // 3.
-    val list = listOf(1,2,3,2,4,5,6,8,2,2)
-    fun <T> removeDuplicates (collection: Collection<T>?): Set<T> {
-        return collection?.toSet() ?: emptySet()
+    val personHashMap = hashMapOf(1 to Person("Иван", 13,"Посудомойщик"),
+        2 to Person("Андрей", 23,"Дизайнер"),
+        3 to Person("Анна", 32,"Аналитик"),
+        4 to Person("Лёша", 29,"Инжинер"))
+    for((key,value ) in personHashMap){
+        println("$key: $value")
     }
-    val unique = removeDuplicates(list)
-    println(unique)
-    line()
-    // 4.
-    val arr = arrayOf(0, 6, 0, 0, 2, 0, 0, 0, 1, 0, 5, 0)
-    val nonZeroArr = arr.filter { it != 0 }.toIntArray()
-    val res = nonZeroArr.plus(IntArray(arr.size-nonZeroArr.size){0})
-    println(res.contentToString())
+}
+
+data class Person(val name: String, val age : Int, val post : String)
+
+fun deleteElement(map : MutableMap <Int,String>){
+    println("Введите значение которое хотите удалить.")
+    val rd = readln()
+    if (map.containsValue(rd)) {
+        map.remove(map.entries.first{it.value == rd}.key)
+    }else println("Такого значения нет")
+}
+
+fun <K> count(arr : Array<K>) :Map<K, Int>{
+
+    val map = mutableMapOf<K, Int>()
+
+    for (i in arr){
+        if (map.containsKey(i)){
+            map[i] = map[i]!! +1
+        }else map[i] = 1
+    }
+    return map
+
+//    return arr.groupingBy { it }.eachCount()
 }
 
 fun line() {
