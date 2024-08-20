@@ -1,46 +1,24 @@
-
 fun main() {
     // 1.
-    val arr = arrayOf(2, 4, 7, 1, 2, 4)
-    println(count(arr).toString())
+    val map = mapOf(1 to "Дима", 2 to "Лёша", 3 to "Анна", 4 to "Юра", 5 to "Андрей", 6 to "Гена")
+    println(map.filter { it.key < 5 })
     line()
     // 2.
-    val people = mutableMapOf(1 to "Иван", 2 to "Петр",3 to "Лида", 4 to "Петр", 5 to "Анна")
-    deleteElement(people)
-    println(people)
+    println(map.filter { it.value.endsWith("а") })
     line()
     // 3.
-    val personHashMap = hashMapOf(1 to Person("Иван", 13,"Посудомойщик"),
-        2 to Person("Андрей", 23,"Дизайнер"),
-        3 to Person("Анна", 32,"Аналитик"),
-        4 to Person("Лёша", 29,"Инжинер"))
-    for((key,value ) in personHashMap){
-        println("$key: $value")
-    }
-}
-
-data class Person(val name: String, val age : Int, val post : String)
-
-fun deleteElement(map : MutableMap <Int,String>){
-    println("Введите значение которое хотите удалить.")
-    val rd = readln()
-    if (map.containsValue(rd)) {
-        map.remove(map.entries.first{it.value == rd}.key)
-    }else println("Такого значения нет")
-}
-
-fun <K> count(arr : Array<K>) :Map<K, Int>{
-
-    val map = mutableMapOf<K, Int>()
-
-    for (i in arr){
-        if (map.containsKey(i)){
-            map[i] = map[i]!! +1
-        }else map[i] = 1
-    }
-    return map
-
-//    return arr.groupingBy { it }.eachCount()
+    println(map.filter { it.value.startsWith("Г") })
+    line()
+    // 4.
+    val prizeMap = mapOf(
+        15 to 25,
+        20 to 15,
+        25 to 30,
+        35 to 10,
+        40 to 22,
+        55 to 18
+    )
+    println(prizeMap.filter { it.value > 20 && it.key % 10 == 5})
 }
 
 fun line() {
