@@ -1,40 +1,45 @@
 fun main() {
     // 1.
-    val employeeList = mutableListOf(
-        Employee("Алиса", 30, 50000),
-        Employee("Миша", 25, 60000),
-        Employee("Дима", 35, 55000),
-        Employee("Жора", 28, 70000),
-        Employee("Кузя", 22, 48000)
-    )
-    println().line()
-    employeeList.sortedBy { it.name }.forEach { println(it) }.line()
-    employeeList.sortedBy { it.age }.forEach { println(it) }.line()
-    employeeList.sortedBy { it.salary }.forEach { println(it) }.line()
+    print("").line()
+    val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+    println(list.drop(3).take(7).sum()).line()
     // 2.
-    val arrayMatrix = Array(3) { Array(4) { (1..12).random() } }
-    println("Исходный массив:")
-    arrayMatrix.forEach { println(it.joinToString("\t")) }.line()
-    println("Отсортированный массив:")
-    arrayMatrix.flatten().sorted().chunked(4).forEach { println(it.joinToString("\t")) }.line()
+    val numbers = listOf(1, 2, 3, 4)
+    println(numbers.fold("") { sum, el -> sum + el }).line()
     // 3.
-    val arrayMatrix2 = Array(3) { IntArray(4) { (1..12).random() } }
-    println("Проверка на пилообразность массивов")
-    arrayMatrix2.forEach { println(it.joinToString("\t")) }.line()
-    val sawArrs = arrayMatrix2.filter { isSawSmooth(it) }
-    println("Пилообразные массивы: \n${sawArrs.joinToString("\n") { it.joinToString(", ") }}")
-    println("Кол-во пилообразных массивов: ${sawArrs.count()}")
-}
+    val players = listOf(
+        Player("Алексей", 150, 2000),
+        Player("Мария", 200, 3000),
+        Player("Сергей", 250, 1500),
+        Player("Екатерина", 100, 4000)
+    )
+    println("Общее кол-во очков: " + players.sumOf { it.points })
+    println("Общее кол-во денег: " + players.sumOf { it.money }).line()
+    // 4.  Долго думал над решением часто получался такой вывод {я=[Яблоко, яблоко], в=[Виноград]}
 
-fun isSawSmooth(array: IntArray): Boolean {
-    return array.size >= 3 && (1..< array.size - 1).all { i ->
-        array[i] != array[i - 1] && array[i] != array[i + 1] &&
-                (i <= 1 || (array[i] > array[i - 1] && array[i - 1] < array[i - 2]) ||
-                        (array[i] < array[i - 1] && array[i - 1] > array[i - 2]))
+        //TODO этот вариант подсмотрел
+    val fruits = listOf("Яблоко", "Абрикос", "Банан", "Виноград", "Вишня", "Кокос", "яблоко")
+    println(fruits.groupBy { it.first().lowercase() }.mapValues { it.value.filter { it.length % 2 == 0 } })
+
+        //TODO этот сделал ChatGPT но пришлось немного подправить его
+    val groupedFruits = fruits.fold(mutableMapOf<Char, MutableList<String>>()) { acc, fruit ->
+        val firstChar = fruit.first().lowercaseChar()
+        if (fruit.length % 2 == 0) {
+            acc.computeIfAbsent(firstChar) { mutableListOf() }.add(fruit)
+        } else acc.computeIfAbsent(firstChar) { mutableListOf() } + ""
+        acc
     }
+    println(groupedFruits.toMutableMap())
+
+    //TODO этот в конце концов сделал сам
+    println(fruits.associateBy(
+        { it.first().lowercase() },
+        { t -> fruits.filter { if (it.length % 2 == 0 && it.lowercase().startsWith(t.lowercase().first())) true else false } }))
+
+
 }
 
-data class Employee(val name: String, val age: Int, val salary: Int)
+data class Player(val name: String, val points: Int, val money: Int)
 
 
 fun Any.line() {
