@@ -1,21 +1,31 @@
 fun main() {
     // 1.
     print("").line()
-    val list = listOf("one", "two", "three").map { it.reversed() }
-    println(list).line()
+    val list = (1..20).toList()
+    println(list.dropWhile { it <= 5 }.count { it % 2 == 0 }).line()
     // 2.
-    val numList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9).filter { it <= 3 }.map { it * it }
-    println(numList).line()
+    println(list.takeWhile { it < 8 }.sum()).line()
     // 3.
-    val colorListEn = listOf("red", "blue", "white")
-    val colorListRu = listOf("красный", "синий", "белый")
-    println(colorListEn.zip(colorListRu) { a, b -> "Значение: $a, перевод: $b" }).line()
+    val numList = listOf("one", "two", "three")
+    println(numList.flatMap { it.toList() }).line()
     // 4.
-    val monthList = listOf("Jan", "Feb", "Mar", "Apr", "May").sumOf { it.length }
-    println(monthList).line()
+    val strings = listOf("один", "два", "три", "четыре", "пять", "пятнадцать")
+    println(strings.maxBy { it.length }).line()
+    // 5.
+    val products = listOf(
+        Product("Яблоки", 10),
+        Product("Бананы", 5),
+        Product("Апельсины", 8),
+        Product("Груши", 12)
+    )
+    println("Кол-во продуктов на складе: " + products.sumOf { it.count })
+
 }
 
+data class Product(val name: String, val count: Int)
+
+
 fun Any.line() {
-    repeat(50) { print(ColorUtils.ANSI_CYAN + "=" + ColorUtils.ANSI_RESET) }
+    repeat(60) { print(ColorUtils.ANSI_CYAN + "=" + ColorUtils.ANSI_RESET) }
     println()
 }
