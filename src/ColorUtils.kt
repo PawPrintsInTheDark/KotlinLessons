@@ -1,14 +1,14 @@
 class ColorUtils {
     companion object {
-        val ANSI_RESET: String = "\u001B[0m"
-        val ANSI_BLACK: String = "\u001B[30m"
-        val ANSI_RED: String = "\u001B[31m"
-        val ANSI_GREEN: String = "\u001B[32m"
-        val ANSI_YELLOW: String = "\u001B[33m"
-        val ANSI_BLUE: String = "\u001B[34m"
-        val ANSI_PURPLE: String = "\u001B[35m"
-        val ANSI_CYAN: String = "\u001B[36m"
-        val ANSI_WHITE: String = "\u001B[37m"
+        const val ANSI_RESET: String = "\u001B[0m"
+        const val ANSI_BLACK: String = "\u001B[30m"
+        const val ANSI_RED: String = "\u001B[31m"
+        const val ANSI_GREEN: String = "\u001B[32m"
+        const val ANSI_YELLOW: String = "\u001B[33m"
+        const val ANSI_BLUE: String = "\u001B[34m"
+        const val ANSI_PURPLE: String = "\u001B[35m"
+        const val ANSI_CYAN = "\u001B[36m"
+        const val ANSI_WHITE: String = "\u001B[37m"
 
         const val ANSI_BLACK_BACKGROUND: String = "\u001B[40m"
         const val ANSI_RED_BACKGROUND: String = "\u001B[41m"
