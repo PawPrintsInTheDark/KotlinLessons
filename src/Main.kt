@@ -1,48 +1,65 @@
 import kotlinx.coroutines.*
+import java.util.concurrent.CancellationException
+import kotlin.system.exitProcess
 
-suspend fun main() = coroutineScope<Unit>{
-    val persons = listOf(
-        Person("Алексей", 30),
-        Person("Мария", 25),
-        Person("Иван", 40),
-        Person("Елена", 35)
-    )
-
-    val weatherList = listOf(
-        Weather("Москва", "Облачно", 20.4),
-        Weather("Санкт-Петербург", "Дождь", 7.5),
-        Weather("Новосибирск", "Солнечно", 13.0),
-        Weather("Екатеринбург", "Снег", -2.0)
-    )
-
-    val list = List(10) { (1..100).random() }
-
-    getServerData(persons)
-    getServerData(weatherList)
-    getServerData(list)
-
-    println(ColorUtils.ANSI_GREEN +"Данные загружены" +ColorUtils.ANSI_RESET)
-    println(persons)
-    println(weatherList)
-    println(list)
-    println(ColorUtils.ANSI_GREEN+"Программа завершена")
-
-
-
-
-
-}
-
-private suspend fun <T> getServerData(data : List<T>){
-    for (i in data){
-        delay(1000L)
-        println("Данные с сервера: $i")
+suspend fun main() = coroutineScope<Unit> {
+    line()
+    val payment = launch(start = CoroutineStart.LAZY) {
+        println("Оплата продукта началась")
+        delay(2000L)
+        println("Сканирование и обработка...")
+        delay(2000L)
+        println("Покупка оплачена.")
     }
+    val cancelPayment = launch(start = CoroutineStart.LAZY) {
+        println("Отмена покупки...")
+        delay(2000L)
+        println("Покупка отменена.")
+    }
+    val goodbye = launch(start = CoroutineStart.LAZY) {
+        println("До свидания")
+    }
+
+
+    println("Программа покупки продуктов")
+    delay(1000L)
+    println("Купить товар:\n1.Да\n2.Нет")
+
+    when (readln()) {
+        "1" -> payment.join()
+        "2" -> cancelPayment.join()
+        else -> println("Ошибка. Неверный выбор.")
+    }
+
+    goodbye.join()
+    line()
+    // 2.
+    println("Начало программы")
+    val job = launch {
+        for (i in 1..4) {
+            delay(1000L)
+            println(i)
+        }
+    }
+    val lazyjob = launch(start = CoroutineStart.LAZY) {
+        delay(2500L)
+        println("Произошел ленивый запуск")
+    }
+
+    val finishjob = launch(start = CoroutineStart.LAZY) { println("Программа завершена") }
+
+    lazyjob.start()
+    job.join()
+    finishjob.join()
+
+    line()
+
+    //TODO Принудительно заканчиваю программу т.к. сама она это не делает.
+    exitProcess(1)
 }
 
-data class Person(val name : String,val age : Int)
-data class Weather(val city : String, val description : String, val temp : Double)
+
 fun Any.line() {
-    repeat(60) { print(ColorUtils.ANSI_CYAN + "=" + ColorUtils.ANSI_RESET) }
+    repeat(60) { print(ColorUtils.ANSI_BLUE + "=" + ColorUtils.ANSI_RESET) }
     println()
 }
