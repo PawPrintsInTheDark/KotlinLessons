@@ -1,6 +1,8 @@
+import kotlin.random.Random
+
 class ColorUtils {
     companion object {
-        const val ANSI_RESET: String = "\u001B[0m"
+        const val RESET: String = "\u001B[0m"
         const val ANSI_BLACK: String = "\u001B[30m"
         const val ANSI_RED: String = "\u001B[31m"
         const val ANSI_GREEN: String = "\u001B[32m"
@@ -18,5 +20,14 @@ class ColorUtils {
         const val ANSI_PURPLE_BACKGROUND: String = "\u001B[45m"
         const val ANSI_CYAN_BACKGROUND: String = "\u001B[46m"
         const val ANSI_WHITE_BACKGROUND: String = "\u001B[47m"
+
+        fun getRandomColor(): String {
+            val colors = listOf(
+                ANSI_RED, ANSI_GREEN, ANSI_YELLOW,
+                ANSI_BLUE, ANSI_PURPLE, ANSI_CYAN
+            )
+            return colors[Random.nextInt(colors.size)]
+        }
     }
+
 }

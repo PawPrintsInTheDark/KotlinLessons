@@ -1,65 +1,53 @@
 import kotlinx.coroutines.*
 import java.util.concurrent.CancellationException
+import kotlin.random.Random
 import kotlin.system.exitProcess
+import kotlin.system.measureTimeMillis
 
 suspend fun main() = coroutineScope<Unit> {
     line()
-    val payment = launch(start = CoroutineStart.LAZY) {
-        println("Оплата продукта началась")
-        delay(2000L)
-        println("Сканирование и обработка...")
-        delay(2000L)
-        println("Покупка оплачена.")
+    val time = measureTimeMillis {
+        val num = getRandomList(10, 1..100)
+        val chars = getRandomList(10)
+
+        val intcount = async { unpack(num) }
+        val charcount = async { unpack(chars) }
+
+        println("\nОбщий размер полученного списка: ${intcount.await() + charcount.await()}")
+        println(concatenate(num, chars))
     }
-    val cancelPayment = launch(start = CoroutineStart.LAZY) {
-        println("Отмена покупки...")
-        delay(2000L)
-        println("Покупка отменена.")
+    println("${ColorUtils.ANSI_GREEN}Затрачено времени: $time мс")
+}
+
+fun <T> concatenate(vararg lists: List<T>): Pair<Int, MutableList<T>> {
+    val l = mutableListOf<T>()
+    lists.forEach {
+        l.addAll(it)
     }
-    val goodbye = launch(start = CoroutineStart.LAZY) {
-        println("До свидания")
+    return Pair(l.size, l)
+}
+
+suspend fun <T> unpack(list: List<T>): Int {
+    val color = ColorUtils.getRandomColor()
+    val count = list.fold(0) { count, i ->
+        delay(1000L)
+        print("$color$i ${ColorUtils.RESET}")
+        count + 1
     }
+    return count
+}
 
+fun getRandomList(size: Int, range: IntRange): List<Int> {
+    return List(size) { Random.nextInt(range.first, range.last + 1) }
+}
 
-    println("Программа покупки продуктов")
-    delay(1000L)
-    println("Купить товар:\n1.Да\n2.Нет")
-
-    when (readln()) {
-        "1" -> payment.join()
-        "2" -> cancelPayment.join()
-        else -> println("Ошибка. Неверный выбор.")
-    }
-
-    goodbye.join()
-    line()
-    // 2.
-    println("Начало программы")
-    val job = launch {
-        for (i in 1..4) {
-            delay(1000L)
-            println(i)
-        }
-    }
-    val lazyjob = launch(start = CoroutineStart.LAZY) {
-        delay(2500L)
-        println("Произошел ленивый запуск")
-    }
-
-    val finishjob = launch(start = CoroutineStart.LAZY) { println("Программа завершена") }
-
-    lazyjob.start()
-    job.join()
-    finishjob.join()
-
-    line()
-
-    //TODO Принудительно заканчиваю программу т.к. сама она это не делает.
-    exitProcess(1)
+fun getRandomList(size: Int): List<Char> {
+    val chars = ('а'..'я') + ('А'..'Я') + ('0'..'9')
+    return List(size) { chars.random() }
 }
 
 
 fun Any.line() {
-    repeat(60) { print(ColorUtils.ANSI_BLUE + "=" + ColorUtils.ANSI_RESET) }
+    repeat(60) { print(ColorUtils.ANSI_GREEN + "=" + ColorUtils.RESET) }
     println()
 }
