@@ -16,7 +16,7 @@ fun main() {
     println("Исходный массив:")
     arrayMatrix.forEach { println(it.joinToString("\t")) }.line()
     println("Отсортированный массив:")
-    arrayMatrix.flatten().sorted().chunked(4).forEach { println(it.joinToString("\t")) }.line()
+    arrayMatrix.forEach { println(it.sorted().joinToString("\t")) }.line()
     // 3.
     val arrayMatrix2 = Array(3) { IntArray(4) { (1..12).random() } }
     println("Проверка на пилообразность массивов")
