@@ -1,40 +1,69 @@
-fun main() {
-    // 1.
-    val employeeList = mutableListOf(
-        Employee("Алиса", 30, 50000),
-        Employee("Миша", 25, 60000),
-        Employee("Дима", 35, 55000),
-        Employee("Жора", 28, 70000),
-        Employee("Кузя", 22, 48000)
-    )
-    println().line()
-    employeeList.sortedBy { it.name }.forEach { println(it) }.line()
-    employeeList.sortedBy { it.age }.forEach { println(it) }.line()
-    employeeList.sortedBy { it.salary }.forEach { println(it) }.line()
-    // 2.
-    val arrayMatrix = Array(3) { Array(4) { (1..12).random() } }
-    println("Исходный массив:")
-    arrayMatrix.forEach { println(it.joinToString("\t")) }.line()
-    println("Отсортированный массив:")
-    arrayMatrix.forEach { println(it.sorted().joinToString("\t")) }.line()
-    // 3.
-    val arrayMatrix2 = Array(3) { IntArray(4) { (1..12).random() } }
-    println("Проверка на пилообразность массивов")
-    arrayMatrix2.forEach { println(it.joinToString("\t")) }.line()
-    val sawArrs = arrayMatrix2.filter { isSawSmooth(it) }
-    println("Пилообразные массивы: \n${sawArrs.joinToString("\n") { it.joinToString(", ") }}")
-    println("Кол-во пилообразных массивов: ${sawArrs.count()}")
-}
+import kotlinx.coroutines.*
+import kotlin.coroutines.coroutineContext
+import kotlin.random.Random
 
-fun isSawSmooth(array: IntArray): Boolean {
-    return array.size >= 3 && (1..< array.size - 1).all { i ->
-        array[i] != array[i - 1] && array[i] != array[i + 1] &&
-                (i <= 1 || (array[i] > array[i - 1] && array[i - 1] < array[i - 2]) ||
-                        (array[i] < array[i - 1] && array[i - 1] > array[i - 2]))
+suspend fun main() {
+    println("Программа работы с базой данных сотрудников")
+    val personManager = PersonManager()
+    while (true) {
+        println("Добавить сотрудника:\n1. Да\n2. Нет")
+        val choice = readLine()
+        if (choice == "1") {
+            println("Введите имя сотрудника:")
+            val name = readLine() ?: ""
+            println("Введите зарплату сотрудника:")
+            val salary = readLine()?.toIntOrNull() ?: 0
+            val person = Person(name, salary)
+            personManager.addPerson(person)
+            println("Сотрудник добавлен.")
+        } else if (choice == "2") {
+            break
+        }
+    }
+    coroutineScope {
+        val job = launch {
+            println("Чтение базы данных:")
+            personManager.addPassword()
+            personManager.readDataPersonList()
+        }
+        launch {
+            while (true) {
+                if (readln() == "0") {
+                    println("Завершение полной работы")
+                    job.cancelAndJoin()
+                    break
+                }
+            }
+        }
     }
 }
 
-data class Employee(val name: String, val age: Int, val salary: Int)
+data class Person(val name: String, val salary: Int)
+
+
+class PersonManager {
+    private val personList = mutableListOf<Person>()
+    val resultList = mutableMapOf<Person, Int>()
+
+    suspend fun addPerson(person: Person) {
+        personList.add(person)
+    }
+
+    suspend fun addPassword() {
+        for (person in personList) {
+            resultList[person] = (100000..999999).random()
+            delay(500L)
+        }
+    }
+
+    suspend fun readDataPersonList() {
+        for ((key, value) in resultList) {
+            println("Сотрудник: $key; пароль: $value")
+            delay(1000L)
+        }
+    }
+
+}
 
 
 fun Any.line() {
