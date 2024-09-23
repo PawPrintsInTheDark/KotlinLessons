@@ -1,22 +1,19 @@
-class ColorUtils {
-    companion object {
-        val ANSI_RESET: String = "\u001B[0m"
-        val ANSI_BLACK: String = "\u001B[30m"
-        val ANSI_RED: String = "\u001B[31m"
-        val ANSI_GREEN: String = "\u001B[32m"
-        val ANSI_YELLOW: String = "\u001B[33m"
-        val ANSI_BLUE: String = "\u001B[34m"
-        val ANSI_PURPLE: String = "\u001B[35m"
-        val ANSI_CYAN: String = "\u001B[36m"
-        val ANSI_WHITE: String = "\u001B[37m"
-
-        const val ANSI_BLACK_BACKGROUND: String = "\u001B[40m"
-        const val ANSI_RED_BACKGROUND: String = "\u001B[41m"
-        const val ANSI_GREEN_BACKGROUND: String = "\u001B[42m"
-        const val ANSI_YELLOW_BACKGROUND: String = "\u001B[43m"
-        const val ANSI_BLUE_BACKGROUND: String = "\u001B[44m"
-        const val ANSI_PURPLE_BACKGROUND: String = "\u001B[45m"
-        const val ANSI_CYAN_BACKGROUND: String = "\u001B[46m"
-        const val ANSI_WHITE_BACKGROUND: String = "\u001B[47m"
-    }
+enum class ColorUtils(val code: String) {
+    ANSI_RESET("\u001B[0m"),
+    ANSI_BLACK("\u001B[30m"),
+    ANSI_RED("\u001B[31m"),
+    ANSI_GREEN("\u001B[32m"),
+    ANSI_YELLOW("\u001B[33m"),
+    ANSI_BLUE("\u001B[34m"),
+    ANSI_PURPLE("\u001B[35m"),
+    ANSI_CYAN("\u001B[36m"),
+    ANSI_WHITE("\u001B[37m"),
+    ANSI_BLACK_BACKGROUND("\u001B[40m"),
+    ANSI_RED_BACKGROUND("\u001B[41m"),
+    ANSI_GREEN_BACKGROUND("\u001B[42m"),
+    ANSI_YELLOW_BACKGROUND("\u001B[43m"),
+    ANSI_BLUE_BACKGROUND("\u001B[44m"),
+    ANSI_PURPLE_BACKGROUND("\u001B[45m"),
+    ANSI_CYAN_BACKGROUND("\u001B[46m"),
+    ANSI_WHITE_BACKGROUND("\u001B[47m");
 }
