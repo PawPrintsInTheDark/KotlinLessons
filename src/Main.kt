@@ -3,48 +3,48 @@ import kotlinx.coroutines.flow.*
 import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
-suspend fun main(){
-
-    val persons = mutableListOf<Person>()
-    val phones = mutableListOf<String>()
-
+suspend fun main() = coroutineScope<Unit>{
+    println("Введите количество пользователей для создания паролей:")
+    val userCount = readLine()?.toIntOrNull() ?: return@coroutineScope
+    println("Введите первый символ для паролей:")
+    val firstChar = readLine() ?: return@coroutineScope
     val time = measureTimeMillis {
-        withContext(newSingleThreadContext("my_thread")) {
-            launch {
-                getPersonsFlow().collect { persons.add(it) }
-            }
 
-            launch {
-                getPhoneFlow(persons.size).collect { phones.add(it) }
-            }
+        val idFlow = getIdFlow(userCount).toList()
+        val passwordFlow = getPasswordFlow(firstChar,userCount).toList()
+
+        val result = idFlow.zip(passwordFlow).toMap()
+        println("Сгенерированные пароли:")
+        result.forEach { (id, password) ->
+            println("ID: $id, Пароль: $password")
         }
     }
-    val personInfo = persons.zip(phones) { person, phone ->
-        "$person, $phone"
-    }
-    personInfo.forEach { println(it) }
 
     println(ColorUtils.ANSI_YELLOW + "\nЗатраченно времени $time mc")
 
 }
 
-private fun getPersonsFlow() = listOf(
-    Person("Дима", "Директор"),
-    Person("Аня", "Сисадмин"),
-    Person("Андрей", "Менеджер"),
-    Person("Виталий", "Разработчик")
-).asFlow()
+fun createPassword(): String {
+    val characters = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+    var password = ""
+    for (i in 0..5) {
+        val char = characters.random()
+        password += if (i % 2 == 0) char.uppercaseChar() else char
+    }
+    return password
+}
 
-private fun getPhoneFlow(length: Int) = flow {
-    repeat(length) {
-        val num = Random.nextInt(1000000, 10000000)
-        emit("+7917" + num)
+fun getListOfPassword(input: String, length: Int): List<String> {
+    return List(length) {
+        val password = createPassword()
+        if (password.startsWith(input, ignoreCase = true)) password else getListOfPassword(input, 1)[0]
     }
 }
 
-
-data class Person(val name: String, val role: String) {
-    override fun toString(): String {
-        return "Пользователь: $name, $role"
-    }
+fun getListId(length: Int): List<String> {
+    return List(length) { String.format("%06d", it + 1) }
 }
+
+fun getIdFlow(length: Int) = getListId(length).asFlow()
+
+fun getPasswordFlow(input: String, length: Int) = getListOfPassword(input, length).asFlow()
