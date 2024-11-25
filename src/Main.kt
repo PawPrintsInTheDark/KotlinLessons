@@ -1,83 +1,68 @@
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import java.awt.Color
-import kotlin.random.Random
-import kotlin.system.measureTimeMillis
+import java.io.File
 
-suspend fun main() {
-
+fun main() {
     line()
-    val numList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).asFlow()
+    // 1.
+    val filename = "example.txt"
+    writeToFile(filename, "Hello World!")
 
-    println("Сумма квадратов:" + numList.map { it * it }.reduce { a, b -> a + b })
-
+    println(readFromFile("text.txt"))
+    println(readFromFile(filename))
     line()
-    //2
-    val people = listOf(
-        Person("Алексей", 25),
-        Person("Мария", 30),
-        Person("Дмитрий", 22),
-        Person("Елена", 28),
-        Person("Сергей", 35),
-        Person("Анна", 27),
-        Person("Иван", 40),
-        Person("Ольга", 31),
-        Person("Николай", 29),
-        Person("Татьяна", 26)
-    ).asFlow()
+    // 2.
+    val filePath = File("").absoluteFile.toString()
+    val fileName = "even_numbers.txt"
+    val N = 5
 
-    println("Введите первый символ имени:")
-    val firstChar = readLine() ?: ""
-    println("Введите возраст:")
-    val age = readLine()?.toIntOrNull() ?: -1
-
-    people.getPerson(firstChar, age).collect { println(it) }
-
+    writeEvenNumbersToFile(filePath, fileName, N)
+    println(readFromFile(fileName))
     line()
-    // 3
-    val names = listOf("Петр", "Николай", "Василий").asFlow()
-    val card = names.map { generateCardNumber() }
-    val password = names.map { generatePassword() }
+    // 3.
 
-    val persons = mutableListOf<Person2>()
+    try {
+        val numbers = File(fileName).readLines().map { it.toInt() }
 
-    combine(names, card, password) { n, c, p ->
-        Person2(n, c, p)
-    }.collect { persons.add(it) }
+        if (numbers.size < 4) {
+            println("Файл должен содержать не менее четырех элементов!")
+            return
+        }
 
+        println("Первый элемент: ${numbers[0]}")
+        println("Второй элемент: ${numbers[1]}")
+        println("Предпоследний элемент: ${numbers[numbers.size - 2]}")
+        println("Последний элемент: ${numbers.last()}")
 
+    } catch (e: Exception) {
+        println("Произошла ошибка при чтении файла: ${e.message}")
+    }
 
-    println(persons)
 }
 
-suspend fun <T1, T2, T3, R> combine(
-    first: Flow<T1>,
-    second: Flow<T2>,
-    third: Flow<T3>,
-    transform: suspend (T1, T2, T3) -> R
-): Flow<R> {
-    return first.zip(second) { t1, t2 -> t1 to t2 }.zip(third) { (t1, t2), t3 -> transform(t1, t2, t3) }
+fun writeEvenNumbersToFile(filePath: String, fileName: String, N: Int) {
+    val file = File("$filePath/$fileName")
+    val evenNumbers = (1..N).map { it * 2 }
+    file.writeText(evenNumbers.joinToString("\n"))
+    println("Файл \"$fileName\" успешно создан.")
 }
-
-data class Person2(val name: String, val card: String, val password: String)
-
-fun generateCardNumber(): String {
-    return List(4) { Random.nextInt(1000, 9999) }.joinToString(" ")
-}
-
-fun generatePassword(): String {
-    return Random.nextInt(1000, 9999).toString()
-}
-
-fun Flow<Person>.getPerson(first: String, age: Int): Flow<Person> {
-    return this.filter { it.name.startsWith(first, ignoreCase = true) && it.age == age }
-}
-
-data class Person(val name: String, val age: Int)
 
 fun line() {
     repeat(70) {
         print(ColorUtils.ANSI_CYAN + "=" + ColorUtils.ANSI_RESET)
     }
     println()
+}
+
+fun writeToFile(filename: String, text: String) {
+    val file = File(filename)
+    file.writeText(text)
+    println("Teкст записан в файл: $filename")
+}
+
+fun readFromFile(filename: String): String {
+    val file = File(filename)
+    return if (file.exists()) {
+        file.readText()
+    } else {
+        "Файл \"$filename\" не найден."
+    }
 }
