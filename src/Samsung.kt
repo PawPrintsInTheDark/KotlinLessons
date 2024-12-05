@@ -1,0 +1,1 @@
+class Samsung : Phone("Samsung", 799.99)

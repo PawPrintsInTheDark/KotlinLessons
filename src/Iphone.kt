@@ -1,0 +1,1 @@
+class IPhone : Phone("iPhone", 999.99)
