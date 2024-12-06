@@ -1,13 +1,11 @@
 fun main() {
     val phonesCity1 = listOf(
-        Samsung(500.0),
         IPhone(700.0),
         Samsung(500.0)
     )
     val phonesCity2 = listOf(
         IPhone(1000.0),
         Samsung(300.0),
-        IPhone(1000.0)
     )
 
     val stores = listOf(CityStore("Москва", phonesCity1, true), CityStore("Омск", phonesCity2))
@@ -22,7 +20,6 @@ fun main() {
             break
         }
         val selectedStore = stores[cityChoice - 1]
-        var repairOffered = false
 
         while (true) {
             println(

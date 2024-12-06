@@ -1,15 +1,17 @@
-class CityStore(val cityName: String, val availablePhones : List<Phone>,  val hasRepairService: Boolean = false) : Store {
-     private val salesCount = mutableMapOf<Phone, Int>()
-     private var repairOffered = false
+class CityStore(val cityName: String, val availablePhones: List<Phone>, val hasRepairService: Boolean = false) : Store {
+    private val salesCount = mutableMapOf<Phone, Int>()
+    private var repairOffered = false
+    private var totalSalesAmount = 0.0
 
     override fun sellPhone(phone: Phone) {
         salesCount[phone] = salesCount.getOrDefault(phone, 0) + 1
-        println("Вы купили ${phone.model} за ${phone.price} рублей.")
+        println("Вы купили ${phone.model} за ${phone.price} рублей.\n")
+        totalSalesAmount += phone.price
     }
 
-    override fun getStatistics() : String{
-        val stats = salesCount.map { "${it.key}: ${it.value} продано" }.joinToString("\n")
-        return "Статистика продаж  в магазине $cityName:\n$stats "
+    override fun getStatistics(): String {
+        val stats = salesCount.map { "${it.key.model}: ${it.value} продано" }.joinToString("\n")
+        return "Статистика продаж в магазине $cityName:\n$stats\nОбщая сумма покупок: $totalSalesAmount\n"
     }
 
     override fun offerRepair(): Boolean {
