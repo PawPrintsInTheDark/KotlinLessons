@@ -1,1 +1,1 @@
-class IPhone : Phone("iPhone", 999.99)
+class IPhone(price : Double) : Phone("iPhone", price)

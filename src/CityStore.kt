@@ -1,4 +1,4 @@
-class CityStore(private val cityName: String, val availablePhones : List<Phone>, private val hasRepairService: Boolean) : Store {
+class CityStore(val cityName: String, val availablePhones : List<Phone>,  val hasRepairService: Boolean = false) : Store {
      private val salesCount = mutableMapOf<Phone, Int>()
      private var repairOffered = false
 
@@ -18,17 +18,17 @@ class CityStore(private val cityName: String, val availablePhones : List<Phone>,
             return false
         }
         if (!repairOffered) {
-            repairOffered = true
             println("Хотите отремонтировать свой телефон? (да/нет)")
             return if (readlnOrNull().equals("да", ignoreCase = true)) {
-                println("Ваш телефон отремонтирован.")
+                println("Ваш телефон отремонтирован.\n")
+                repairOffered = true
                 true
             } else {
-                println("Вы не нуждаетесь в ремонте.")
+                println("Вы не нуждаетесь в ремонте.\n")
                 false
             }
         } else {
-            println("Ремонт уже предлагался.")
+            println("Ремонт уже предлагался.\n")
             return false
         }
     }

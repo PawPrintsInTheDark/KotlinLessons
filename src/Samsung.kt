@@ -1,1 +1,1 @@
-class Samsung : Phone("Samsung", 799.99)
+class Samsung(price : Double) : Phone("Samsung", price)
